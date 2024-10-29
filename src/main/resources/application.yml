@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: aws_projeto02
+
+server:
+  port: 9090
+
+aws:
+  region: us-east-01
+  sqs:
+    queue:
+      product:
+        events:
+          name: product-events
