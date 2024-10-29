@@ -65,6 +65,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>jakarta.jms</groupId>
+			<artifactId>jakarta.jms-api</artifactId>
+			<version>3.1.0</version> <!-- Ou uma versão mais recente -->
+		</dependency>
+
+		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
 			<version>1.2.0</version>

@@ -13,8 +13,8 @@ public class SnsMessage {
     private String type;
     @JsonProperty("TopicArn")
     private String topicArn;
-    @JsonProperty("Timestamp")
-    private String timestamp;
+    @JsonProperty("TimeStamp")
+    private String timeStamp;
     @JsonProperty("MessageId")
     private String messageId;
 }
