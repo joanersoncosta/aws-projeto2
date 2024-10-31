@@ -1,10 +1,13 @@
-package com.github.joanersoncosta.aws_projeto02.config.aws;
+package com.github.joanersoncosta.aws_projeto02.config.aws.local;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.sqs.AmazonSQSClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.EnableJms;
@@ -16,23 +19,27 @@ import javax.jms.Session;
 
 @Configuration
 @EnableJms
-@Profile("!local")
-public class JmsConfig {
+@Profile("local")
+public class JmsConfigLocal {
+
     @Value("${aws.region}")
     private String awsRegion;
-    private SQSConnectionFactory sqsConnectionFactory;
 
-    public DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory(){
-
-        this.sqsConnectionFactory = new SQSConnectionFactory(
+    @Bean
+    public SQSConnectionFactory sqsConnectionFactory() {
+        return new SQSConnectionFactory(
                 new ProviderConfiguration(),
-                AmazonSQSClientBuilder.standard()
-                        .withRegion(awsRegion)
+                AmazonSQSClient.builder()
+                        .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:4566", Regions.US_EAST_1.getName()))
                         .withCredentials(new DefaultAWSCredentialsProviderChain())
-                        .build());
+                        .build()
+        );
+    }
 
+    @Bean
+    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(sqsConnectionFactory);
+        factory.setConnectionFactory(sqsConnectionFactory());
         factory.setDestinationResolver(new DynamicDestinationResolver());
         factory.setConcurrency("2");
         factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);

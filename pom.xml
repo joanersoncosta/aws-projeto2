@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
+		<version>2.7.17</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.joanersoncosta.</groupId>
@@ -27,8 +27,12 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
-		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<java.version>11</java.version>
+		<spring-cloud.version>2021.0.4</spring-cloud.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+
+        <aws-java-sdk.version>1.11.887</aws-java-sdk.version>
+        <amazon-sqs-java-messaging-lib.version>1.0.8</amazon-sqs-java-messaging-lib.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -52,29 +56,22 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-sqs</artifactId>
-			<version>1.12.560</version> <!-- Verifique por versões mais recentes -->
-		</dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sqs</artifactId>
+            <version>${aws-java-sdk.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>5.2.9.RELEASE</version> <!-- Verifique por versões mais recentes -->
-		</dependency>
-
-		<dependency>
-			<groupId>jakarta.jms</groupId>
-			<artifactId>jakarta.jms-api</artifactId>
-			<version>3.1.0</version> <!-- Ou uma versão mais recente -->
-		</dependency>
-
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
-			<version>1.2.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-sqs-java-messaging-lib</artifactId>
+            <version>${amazon-sqs-java-messaging-lib.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
